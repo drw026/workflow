@@ -32,9 +32,9 @@ config = {
 }
 
 // default gulp task
-gulp.task('default', function() {
+gulp.task('default', ['sass'], function() {
 
-    // watch tasks
+    gulp.watch(config.paths.app.scss_src, ['sass']);
 
 });
 
