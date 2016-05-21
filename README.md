@@ -2,8 +2,8 @@
 A workflow created with Gulp taskrunner
 
 ## Todos
-1. Style (SASS) task
-  * Autoprefixer
+~~ 1. Style (SASS) task ~~
+~~  * Autoprefixer ~~
 2. Javascript task
 3. Browser Sync
 4. Clean dist folder for new deploys
