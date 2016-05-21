@@ -11,3 +11,4 @@ A workflow created with Gulp taskrunner
 7. Javascript deploy task
 8. Images deploy task (image optimization)
 9. Cache busting assets (css & js)
+10. SASSdoc integration
