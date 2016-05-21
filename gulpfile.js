@@ -3,7 +3,7 @@
  */
 
 // declare vars
-var gulp, sass, sourcemaps, prefix, concat, config;
+var gulp, sass, sourcemaps, prefix, concat, browserSync, config;
 
 // init plugins
 gulp = require('gulp');
@@ -11,6 +11,7 @@ sass = require('gulp-sass');
 sourcemaps = require('gulp-sourcemaps');
 prefix = require('gulp-autoprefixer');
 concat = require('gulp-concat');
+browserSync = require('browser-sync');
 
 // config
 config = {
@@ -32,7 +33,7 @@ config = {
 }
 
 // default gulp task
-gulp.task('default', ['sass'], function() {
+gulp.task('default', ['browserSync', 'sass'], function() {
 
     gulp.watch(config.paths.app.scss_src, ['sass']);
 
@@ -61,5 +62,21 @@ gulp.task('sass', function() {
         .pipe(sourcemaps.write('../maps'))
 
         .pipe(gulp.dest(config.paths.app.css_dest))
+
+        .pipe(browserSync.reload({stream: true}));
+
+});
+
+gulp.task('browserSync', function() {
+
+    browserSync({
+        server: {
+            baseDir: "app/"
+        },
+        options: {
+            reloadDelay: 250
+        },
+        notify: false
+    });
 
 });
