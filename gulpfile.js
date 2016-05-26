@@ -3,7 +3,7 @@
  */
 
 // declare vars
-var gulp, sass, sourcemaps, prefix, concat, browserSync, plumber, config;
+var gulp, sass, sourcemaps, prefix, concat, browserSync, plumber, gutil, config;
 
 // init plugins
 gulp = require('gulp');
@@ -13,6 +13,7 @@ prefix = require('gulp-autoprefixer');
 concat = require('gulp-concat');
 browserSync = require('browser-sync');
 plumber = require('gulp-plumber');
+gutil = require('gulp-util');
 
 // config
 config = {
