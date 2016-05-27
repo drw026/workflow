@@ -3,17 +3,17 @@
  */
 
 // declare vars
-var gulp, sass, sourcemaps, prefix, concat, browserSync, plumber, gutil, config;
+var gulp, plug, bSync, config;
 
 // init plugins
 gulp = require('gulp');
-sass = require('gulp-sass');
-sourcemaps = require('gulp-sourcemaps');
-prefix = require('gulp-autoprefixer');
-concat = require('gulp-concat');
-browserSync = require('browser-sync');
-plumber = require('gulp-plumber');
-gutil = require('gulp-util');
+plug = require("gulp-load-plugins")(
+    {
+        pattern: ['gulp-*', 'gulp.*'],
+        replaceString: /\bgulp[\-.]/
+    }
+);
+bSync = require('browser-sync');
 
 // config
 config = {
@@ -22,8 +22,8 @@ config = {
 
         app: {
             scss_src: 'app/scss/**/*.scss',
-            css_dest: 'app/css'
-            js_src:
+            css_dest: 'app/css',
+            js_src: ''
         },
 
         dist: {
@@ -46,33 +46,33 @@ gulp.task('sass', function() {
 
     return gulp.src(config.paths.app.scss_src)
 
-        .pipe(sourcemaps.init())
+        .pipe(plug.sourcemaps.init())
 
-        .pipe(sass({
+        .pipe(plug.sass({
             errLogToConsole: true,
             includePaths: [
                 'app/scss/'
             ]
         }))
 
-        .pipe(prefix({
+        .pipe(plug.autoprefixer({
             browsers: config.browserSupport,
-            cascade:  true
+            cascade: true
         }))
 
-        .pipe(concat('styles.css'))
+        .pipe(plug.concat('styles.css'))
 
-        .pipe(sourcemaps.write('../maps'))
+        .pipe(plug.sourcemaps.write('../maps'))
 
         .pipe(gulp.dest(config.paths.app.css_dest))
 
-        .pipe(browserSync.reload({stream: true}));
+        .pipe(bSync.reload({stream: true}));
 
 });
 
 gulp.task('browserSync', function() {
 
-    browserSync({
+    bSync({
         server: {
             baseDir: "app/"
         },
