@@ -23,7 +23,8 @@ config = {
         app: {
             scss_src: 'app/scss/**/*.scss',
             css_dest: 'app/css',
-            js_src: ''
+            js_src: 'app/js/**/*.js',
+            js_dest: 'app/js'
         },
 
         dist: {
@@ -36,13 +37,39 @@ config = {
 }
 
 // default gulp task
-gulp.task('default', ['browserSync', 'sass'], function() {
+gulp.task('default', ['browserSync', 'styles', 'scripts'], function() {
 
-    gulp.watch(config.paths.app.scss_src, ['sass']);
+    gulp.watch(config.paths.app.scss_src, ['styles']);
+
+    gulp.watch(config.paths.app.js_src, ['scripts']);
 
 });
 
-gulp.task('sass', function() {
+// script task
+gulp.task('scripts', function() {
+
+    return gulp.src([config.paths.app.js_src, '!app/js/scripts.min.js'])
+
+        .pipe(plug.sourcemaps.init())
+
+        .pipe(plug.cached('scripts'))
+
+        .pipe(plug.uglify())
+
+        .pipe(plug.remember('scripts'))
+
+        .pipe(plug.concat('scripts.min.js'))
+
+        .pipe(plug.sourcemaps.write('../maps'))
+
+        .pipe(gulp.dest(config.paths.app.js_dest))
+
+        .pipe(bSync.stream());
+
+});
+
+// sfyles task
+gulp.task('styles', function() {
 
     return gulp.src(config.paths.app.scss_src)
 
