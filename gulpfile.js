@@ -20,15 +20,15 @@ config = {
 
     paths: {
 
-        app: {
-            scss_src: 'app/scss/**/*.scss',
-            css_dest: 'app/css',
-            js_src: 'app/js/**/*.js',
-            js_dest: 'app/js'
+        sass: {
+            src: 'app/scss/**/*.scss',
+            init: 'app/scss/init.scss',
+            css: 'app/css'
         },
 
-        dist: {
-            // dist paths
+        scripts: {
+            src: 'app/js/**/*.js',
+            dest: 'app/js'
         }
 
     },
@@ -36,19 +36,32 @@ config = {
     browserSupport: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
 }
 
+/**
+ * Show what file has changed in console
+ * @param  {Object} evt event object
+ */
+var changeEvent = function(evt) {
+
+    plug.util.log('File', plug.util.colors.cyan(evt.path.replace(new RegExp('/.*/'), '')), 'was', plug.util.colors.magenta(evt.type));
+
+};
+
 // default gulp task
-gulp.task('default', ['browserSync', 'styles', 'scripts'], function() {
+gulp.task('default', ['styles', 'scripts'], function() {
 
-    gulp.watch(config.paths.app.scss_src, ['styles']);
-
-    gulp.watch(config.paths.app.js_src, ['scripts']);
+    gulp.watch(config.paths.sass.src, ['styles']).on('change', function(evt) {
+        changeEvent(evt);
+    });
+    gulp.watch(config.paths.scripts.src, ['scripts']).on('change', function(evt) {
+        changeEvent(evt);
+    });
 
 });
 
 // script task
 gulp.task('scripts', function() {
 
-    return gulp.src([config.paths.app.js_src, '!app/js/scripts.min.js'])
+    return gulp.src([config.paths.scripts.src, '!app/js/scripts.min.js'])
 
         .pipe(plug.sourcemaps.init())
 
@@ -62,7 +75,7 @@ gulp.task('scripts', function() {
 
         .pipe(plug.sourcemaps.write('../maps'))
 
-        .pipe(gulp.dest(config.paths.app.js_dest))
+        .pipe(gulp.dest(config.paths.scripts.dest))
 
         .pipe(bSync.stream());
 
@@ -71,7 +84,7 @@ gulp.task('scripts', function() {
 // sfyles task
 gulp.task('styles', function() {
 
-    return gulp.src(config.paths.app.scss_src)
+    return gulp.src(config.paths.sass.init)
 
         .pipe(plug.sourcemaps.init())
 
@@ -91,7 +104,7 @@ gulp.task('styles', function() {
 
         .pipe(plug.sourcemaps.write('../maps'))
 
-        .pipe(gulp.dest(config.paths.app.css_dest))
+        .pipe(gulp.dest(config.paths.sass.css))
 
         .pipe(bSync.reload({stream: true}));
 
