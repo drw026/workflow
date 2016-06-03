@@ -1,5 +1,8 @@
 /**
- * Workflow
+ *
+ * Gulpfile setup workflow
+ *
+ * @author Andrew Reasoa
  */
 
 // declare vars
@@ -40,26 +43,34 @@ config = {
  * Show what file has changed in console
  * @param  {Object} evt event object
  */
-var changeEvent = function(evt) {
+function changeEvent(evt) {
 
     plug.util.log('File', plug.util.colors.cyan(evt.path.replace(new RegExp('/.*/'), '')), 'was', plug.util.colors.magenta(evt.type));
 
 };
 
-// default gulp task
-gulp.task('default', ['styles', 'scripts'], function() {
+/**
+ * default gulp task
+ *
+ * @function defaultTask
+ */
+gulp.task('default', ['styles', 'scripts'], function defaultTask() {
 
-    gulp.watch(config.paths.sass.src, ['styles']).on('change', function(evt) {
+    gulp.watch(config.paths.sass.src, ['styles']).on('change', function logStylesChanges(evt) {
         changeEvent(evt);
     });
-    gulp.watch(config.paths.scripts.src, ['scripts']).on('change', function(evt) {
+    gulp.watch(config.paths.scripts.src, ['scripts']).on('change', function logScriptsChanges(evt) {
         changeEvent(evt);
     });
 
 });
 
-// script task
-gulp.task('scripts', function() {
+/**
+ * script task
+ *
+ * @function scriptsTask
+ */
+gulp.task('scripts', function scriptsTask() {
 
     return gulp.src([config.paths.scripts.src, '!app/js/scripts.min.js'])
 
@@ -81,8 +92,12 @@ gulp.task('scripts', function() {
 
 });
 
-// sfyles task
-gulp.task('styles', function() {
+/**
+ * styles task
+ *
+ * @function stylesTask
+ */
+gulp.task('styles', function stylesTask() {
 
     return gulp.src(config.paths.sass.init)
 
@@ -110,7 +125,12 @@ gulp.task('styles', function() {
 
 });
 
-gulp.task('browserSync', function() {
+/**
+ * Activate BrowserSync
+ *
+ * @function activateBrowserSync
+ */
+gulp.task('browserSync', function activateBrowserSync() {
 
     bSync({
         server: {
