@@ -5,17 +5,17 @@
  * @author Andrew Reasoa
  */
 
+'use strict';
+
 // declare vars
 var gulp, plug, bSync, config;
 
 // init plugins
 gulp = require('gulp');
-plug = require("gulp-load-plugins")(
-    {
-        pattern: ['gulp-*', 'gulp.*'],
-        replaceString: /\bgulp[\-.]/
-    }
-);
+plug = require("gulp-load-plugins")({
+    pattern: ['gulp-*', 'gulp.*'],
+    replaceString: /\bgulp[\-.]/
+});
 bSync = require('browser-sync');
 
 // config
@@ -32,15 +32,28 @@ config = {
         scripts: {
             src: 'app/js/**/*.js',
             dest: 'app/js'
+        },
+
+        images: {
+            src: 'app/images'
+            build: 'dist/images'
         }
 
     },
 
-    browserSupport: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
+    browserSupport: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
+
+    imageSettings: {
+        optimizationLevel: 5,
+        progressive: true,
+        interlaced: true
+    },
+
 }
 
 /**
  * Show what file has changed in console
+ *
  * @param  {Object} evt event object
  */
 function changeEvent(evt) {
@@ -122,6 +135,33 @@ gulp.task('styles', function stylesTask() {
         .pipe(gulp.dest(config.paths.sass.css))
 
         .pipe(bSync.reload({stream: true}));
+
+});
+
+/**
+ * images task
+ *
+ * @function imagesTask
+ */
+gulp.task('images', function() {
+
+    return gulp.src(config.paths.images.src + '/**/*.{jpg, png}')
+
+    .pipe(plug.imagemin(imageSettings))
+
+    .pipe(gulp.dest(config.paths.images.build));
+
+});
+
+/**
+ * Removes the dist folder
+ *
+ * @function cleanDist
+ * @param callback
+ */
+gulp.task('clean', function cleanDist(callback) {
+
+    del('dist', callback);
 
 });
 
