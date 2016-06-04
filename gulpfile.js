@@ -8,9 +8,11 @@
 'use strict';
 
 // declare vars
-var del, gulp, plug, bSync, config;
+var del, fs, gulp, plug, bSync, config;
 
 // init plugins
+fs = require('fs');
+config = JSON.parse(fs.readFileSync('./gulp-config.json'));
 gulp = require('gulp');
 plug = require("gulp-load-plugins")({
     pattern: ['gulp-*', 'gulp.*'],
@@ -18,39 +20,6 @@ plug = require("gulp-load-plugins")({
 });
 bSync = require('browser-sync');
 del = require('del');
-
-// config
-config = {
-
-    paths: {
-
-        sass: {
-            src: 'app/scss/**/*.scss',
-            init: 'app/scss/init.scss',
-            css: 'app/css'
-        },
-
-        scripts: {
-            src: 'app/js/**/*.js',
-            dest: 'app/js'
-        },
-
-        images: {
-            src: 'app/images',
-            build: 'dist/images'
-        }
-
-    },
-
-    browserSupport: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
-
-    imageSettings: {
-        optimizationLevel: 5,
-        progressive: true,
-        interlaced: true
-    },
-
-}
 
 /**
  * Show what file has changed in console
