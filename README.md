@@ -13,3 +13,4 @@ A workflow created with Gulp taskrunner
 9. Cache busting assets (css & js)
 10. SASSdoc integration
 11. Bower integration
+12. HTML optimization
