@@ -8,7 +8,7 @@
 'use strict';
 
 // declare vars
-var gulp, plug, bSync, config;
+var del, gulp, plug, bSync, config;
 
 // init plugins
 gulp = require('gulp');
@@ -17,6 +17,7 @@ plug = require("gulp-load-plugins")({
     replaceString: /\bgulp[\-.]/
 });
 bSync = require('browser-sync');
+del = require('del');
 
 // config
 config = {
@@ -35,7 +36,7 @@ config = {
         },
 
         images: {
-            src: 'app/images'
+            src: 'app/images',
             build: 'dist/images'
         }
 
@@ -145,9 +146,9 @@ gulp.task('styles', function stylesTask() {
  */
 gulp.task('images', function() {
 
-    return gulp.src(config.paths.images.src + '/**/*.{jpg, png}')
+    return gulp.src(config.paths.images.src + '/**/*.{jpg,png}')
 
-    .pipe(plug.imagemin(imageSettings))
+    .pipe(plug.imagemin(config.imageSettings))
 
     .pipe(gulp.dest(config.paths.images.build));
 
