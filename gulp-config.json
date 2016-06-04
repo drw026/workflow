@@ -1,17 +1,18 @@
 {
     "paths": {
         "sass": {
-            "src": "app/scss/**/*.scss",
-            "init": "app/scss/init.scss",
-            "css": "app/css"
+            "src": "app/scss",
+            "css": "app/css",
+            "dist": "dist/css"
         },
         "scripts": {
-            "src": "app/js/**/*.js",
-            "dest": "app/js"
+            "src": "app/js/src",
+            "dest": "app/js",
+            "dist": "dist/js"
         },
         "images": {
             "src": "app/images",
-            "build": "dist/images"
+            "dist": "dist/images"
         }
     },
     "browserSupport": [

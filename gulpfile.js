@@ -7,19 +7,16 @@
 
 'use strict';
 
-// declare vars
-var del, fs, gulp, plug, bSync, config;
-
 // init plugins
-fs = require('fs');
-config = JSON.parse(fs.readFileSync('./gulp-config.json'));
-gulp = require('gulp');
-plug = require("gulp-load-plugins")({
+var fs = require('fs');
+var config = JSON.parse(fs.readFileSync('./gulp-config.json'));
+var gulp = require('gulp');
+var plug = require("gulp-load-plugins")({
     pattern: ['gulp-*', 'gulp.*'],
     replaceString: /\bgulp[\-.]/
 });
-bSync = require('browser-sync');
-del = require('del');
+var bSync = require('browser-sync');
+var del = require('del');
 
 /**
  * Show what file has changed in console
@@ -39,10 +36,10 @@ function changeEvent(evt) {
  */
 gulp.task('default', ['styles', 'scripts'], function defaultTask() {
 
-    gulp.watch(config.paths.sass.src, ['styles']).on('change', function logStylesChanges(evt) {
+    gulp.watch(config.paths.sass.src + '/**/*.scss', ['styles']).on('change', function logStylesChanges(evt) {
         changeEvent(evt);
     });
-    gulp.watch(config.paths.scripts.src, ['scripts']).on('change', function logScriptsChanges(evt) {
+    gulp.watch(config.paths.scripts.src + '/**/*.js', ['scripts']).on('change', function logScriptsChanges(evt) {
         changeEvent(evt);
     });
 
@@ -55,8 +52,7 @@ gulp.task('default', ['styles', 'scripts'], function defaultTask() {
  */
 gulp.task('scripts', function scriptsTask() {
 
-    return gulp.src([config.paths.scripts.src, '!app/js/scripts.min.js'])
-
+    return gulp.src(config.paths.scripts.src + '/**/*.js')
         .pipe(plug.sourcemaps.init())
 
         .pipe(plug.cached('scripts'))
@@ -82,7 +78,7 @@ gulp.task('scripts', function scriptsTask() {
  */
 gulp.task('styles', function stylesTask() {
 
-    return gulp.src(config.paths.sass.init)
+    return gulp.src(config.paths.sass.src + '/init.scss')
 
         .pipe(plug.sourcemaps.init())
 
@@ -119,7 +115,7 @@ gulp.task('images', function() {
 
     .pipe(plug.imagemin(config.imageSettings))
 
-    .pipe(gulp.dest(config.paths.images.build));
+    .pipe(gulp.dest(config.paths.images.dist));
 
 });
 
