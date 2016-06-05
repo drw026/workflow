@@ -1,0 +1,32 @@
+{
+    "paths": {
+        "sass": {
+            "src": "app/scss",
+            "css": "app/css",
+            "dist": "dist/css"
+        },
+        "scripts": {
+            "src": "app/js/src",
+            "dest": "app/js",
+            "dist": "dist/js"
+        },
+        "images": {
+            "src": "app/images",
+            "dist": "dist/images"
+        }
+    },
+    "browserSupport": [
+        "last 2 version",
+        "safari 5",
+        "ie 8",
+        "ie 9",
+        "opera 12.1",
+        "ios 6",
+        "android 4"
+    ],
+    "imageSettings": {
+        "optimizationLevel": 5,
+        "progressive": true,
+        "interlaced": true
+    }
+}
