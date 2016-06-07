@@ -10,7 +10,7 @@ A workflow created with Gulp taskrunner
 5. ~~Style deploy task~~
 7. ~~Javascript deploy task~~
 8. ~~Images deploy task (image optimization)~~
-9. Cache busting assets (css & js)
+9. ~~Cache busting assets (css & js)~~
 10. SASSdoc integration
 11. Bower integration
 12. HTML optimization
