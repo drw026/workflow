@@ -181,6 +181,9 @@ gulp.task('styles', function stylesTask() {
         // concatonate them all in 1 file
         .pipe(isProd ? plug.concat('styles.min.'+ version +'.css') : plug.concat('styles.css'))
 
+        // minify css
+        .pipe(isProd ? plug.cssmin() : plug.util.noop())
+
         // if production environment is active write souremap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.write('../maps'))
 
