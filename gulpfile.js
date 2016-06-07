@@ -31,6 +31,9 @@ var plug = require("gulp-load-plugins")({
 // set default production environment
 var isProd = false;
 
+// store version
+var version;
+
 /**
  * Show what file has changed in console
  *
@@ -77,6 +80,7 @@ function fileDestination(type) {
 
     } else {
 
+        // development environment locations
         switch (type) {
 
             case 'scripts':
@@ -140,7 +144,7 @@ gulp.task('scripts', function scriptsTask() {
         .pipe(plug.remember('scripts'))
 
         // concatonate them all in 1 file
-        .pipe(plug.concat('scripts.min.js'))
+        .pipe(isProd ? plug.concat('scripts.min.' + version +'.js') : plug.concat('scripts.min.js'))
 
         // if production environment is active write souremap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.write('../maps'))
@@ -175,7 +179,10 @@ gulp.task('styles', function stylesTask() {
         }))
 
         // concatonate them all in 1 file
-        .pipe(plug.concat('styles.css'))
+        .pipe(isProd ? plug.concat('styles.min.'+ version +'.css') : plug.concat('styles.css'))
+
+        // minify css
+        .pipe(isProd ? plug.cssmin() : plug.util.noop())
 
         // if production environment is active write souremap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.write('../maps'))
@@ -202,6 +209,36 @@ gulp.task('images', function() {
 
     // move optimized images in dist folder
     .pipe(gulp.dest(config.paths.images.dist));
+
+});
+
+/**
+ * inject file path in HTML
+ *
+ * @function injectFilePath
+ */
+gulp.task('inject', function injectFilePath() {
+
+    // get the index file
+    return gulp.src('app/index.html')
+
+        // get the paths of the dist files and
+        // inject the paths into the index.html
+        .pipe(plug.inject(gulp.src(
+            [
+                config.paths.sass.dist + '/*.css',
+                config.paths.scripts.dist + '/*.js'
+            ]
+            ),
+                {
+                    ignorePath: 'dist',
+                    addRootSlash: false
+                }
+            )
+        )
+
+        // move the final index.html to the dist folder
+        .pipe(gulp.dest('dist'));
 
 });
 
@@ -239,13 +276,18 @@ gulp.task('browserSync', function activateBrowserSync() {
 
 /**
  * build files for deployment
+ *
+ * @function deploymentTask
  */
-gulp.task('deploy', function(callback) {
+gulp.task('deploy', function deploymentTask(callback) {
 
     // set production environment
     isProd = true;
 
-    // run clean first and then the rest in parallel
-    plug.sequence('clean', ['styles', 'scripts', 'images'], callback)
+    // generate version based on timestamp
+    version = new Date().getTime();
+
+    // run clean first, then the rest in parallel and end with the inject
+    plug.sequence('clean', ['styles', 'scripts', 'images'], 'inject', callback)
 
 });
