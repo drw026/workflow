@@ -276,8 +276,10 @@ gulp.task('browserSync', function activateBrowserSync() {
 
 /**
  * build files for deployment
+ *
+ * @function deploymentTask
  */
-gulp.task('deploy', function(callback) {
+gulp.task('deploy', function deploymentTask(callback) {
 
     // set production environment
     isProd = true;
