@@ -1,26 +1,22 @@
 # Workflow
 > A workflow created with Gulp taskrunner.
 
-## Getting started
-For using this Gulp workflow you need to have node.js, npm and Gulp (globally) installed.
+> **Features:**
+> - SASS to CSS compiling, minifying, autoprefixing and sourcemap writing
+> - Javascript concatonation and uglifying
+> - Optimizing and minifying images (PNG, JPEG, GIF and SVG)
+> - Cache busting
+> - Live reload using BrowserSync
 
-##### Clone or download
-Clone or download this repo into your folder.
-##### Install dependencies
-Run the following terminal command in the folder where you have placed the repo.
-```sh
-npm install
-```
-It will automaticly install all used dev dependencies.
-##### Paths
-Create your folder structure and edit te paths in the gulp-config.json file.
-##### Run Gulp
-After you have setup the paths and created some scripts and sass files you can run the following command in the terminal:
-```sh
-gulp
-```
-This will run the default Gulp task which will watch your SASS and scripts folder.
-##### Deployment
+## Getting started
+For using this Gulp workflow you need to have [node.js](https://nodejs.org/en/download/), npm and [Gulp (globally)](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) installed.
+
+1. Clone or download this repo into your folder.
+2. Run the following terminal command `npm install` in the folder where you have cloned or downloaded the repo. This will automaticly install all used dev dependencies.
+3. Create your folder structure and edit te paths in the `gulp-config.json` file.
+4. After you have setup the paths and created some scripts and sass files you can run `gulp` in the terminal. This will run the default Gulp task which will watch your SASS and scripts folder.
+
+#### Deployment
 Run the following command to create a deployment ready app/website.
 ``` sh
 gulp deploy
