@@ -14,7 +14,8 @@ For using this Gulp workflow you need to have [node.js](https://nodejs.org/en/do
 1. Clone or download this repo into your folder.
 2. Run the following terminal command `npm install` in the folder where you have cloned or downloaded the repo. This will automaticly install all used dev dependencies.
 3. Create your folder structure and edit te paths in the `gulp-config.json` file.
-4. After you have setup the paths and created some scripts and sass files you can run `gulp` in the terminal. This will run the default Gulp task which will watch your SASS and scripts folder.
+4. Create a index.html file and put `<!-- inject:css --> <!-- endinject -->` in the `<head>` tag and `<!-- inject:js --> <!-- endinject -->`  at the bottom of the `<body>` tag.  You may want to create for example  `<link rel="stylesheet" href="css/styles.css">` within the inject tags to point to the development styles or script when developing.
+5. After you have setup the paths and created some scripts and sass files you can run `gulp` in the terminal. This will run the default Gulp task which will start a browser with BrowserSync and watch your SASS and scripts folders.
 
 #### Deployment
 Run the following command to create a deployment ready app/website.
