@@ -10,6 +10,7 @@ For using this Gulp workflow you need to have node.js, npm and Gulp (globally) i
 npm install
 ```
 It will automaticly install all used dev dependencies.
+
 3. Create your folder structure and edit te paths in the gulp-config.json file.
 4. After you have setup the paths and created some scripts and sass files you can run the following command in the terminal:
 ```sh
