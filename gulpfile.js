@@ -131,7 +131,7 @@ gulp.task('scripts', function scriptsTask() {
 
     return gulp.src(config.paths.scripts.src + '/**/*.js')
 
-        // if production environment is active init sourcemap
+        // if production environment is not active init sourcemap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
         // cache files n memory that have passed through
@@ -146,7 +146,7 @@ gulp.task('scripts', function scriptsTask() {
         // concatonate them all in 1 file
         .pipe(isProd ? plug.concat('scripts.min.' + version +'.js') : plug.concat('scripts.min.js'))
 
-        // if production environment is active write souremap
+        // if production environment is not active write souremap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.write('../maps'))
 
         // put the file in the correct folder
@@ -166,7 +166,7 @@ gulp.task('styles', function stylesTask() {
 
     return gulp.src(config.paths.sass.src + '/init.scss')
 
-        // if production environment is active init sourcemap
+        // if production environment is not active init sourcemap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
         // get all sass files and proces them
@@ -184,7 +184,7 @@ gulp.task('styles', function stylesTask() {
         // minify css
         .pipe(isProd ? plug.cssmin() : plug.util.noop())
 
-        // if production environment is active write souremap
+        // if production environment is not active write sourcemap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.write('../maps'))
 
         // put the file in the correct folder
