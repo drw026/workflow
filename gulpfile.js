@@ -170,7 +170,7 @@ gulp.task('styles', function stylesTask() {
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
         // get all sass files and proces them
-        .pipe(plug.sass({errLogToConsole: true, includePaths: ['app/scss/']}))
+        .pipe(plug.sass({errLogToConsole: true, includePaths: [config.sass.src]}))
 
         // auto prefix css based on browser compatibility
         .pipe(plug.autoprefixer({
@@ -263,9 +263,8 @@ gulp.task('clean', function cleanDist() {
 gulp.task('browserSync', function activateBrowserSync() {
 
     bSync({
-        server: {
-            baseDir: "app/"
-        },
+        proxy: config.browserSync.proxy,
+        files: config.browserSync.files,
         options: {
             reloadDelay: 250
         },
