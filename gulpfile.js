@@ -170,7 +170,7 @@ gulp.task('styles', function stylesTask() {
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
         // get all sass files and proces them
-        .pipe(plug.sass({errLogToConsole: true, includePaths: [config.sass.src]}))
+        .pipe(plug.sass({errLogToConsole: true, includePaths: [config.paths.sass.src]}))
 
         // auto prefix css based on browser compatibility
         .pipe(plug.autoprefixer({
