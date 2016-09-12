@@ -131,6 +131,14 @@ gulp.task('scripts', function scriptsTask() {
 
     return gulp.src(config.paths.scripts.src + '/**/*.js')
 
+        // prevent pipe break on plugin errors
+        .pipe(plug.plumber({
+            handleError: function (err) {
+                console.log(err.message);
+                this.emit('end');
+            }
+        }))
+
         // if production environment is not active init sourcemap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
@@ -166,11 +174,21 @@ gulp.task('styles', function stylesTask() {
 
     return gulp.src(config.paths.sass.src + '/init.scss')
 
+        // prevent pipe break on plugin errors
+        .pipe(plug.plumber({
+            handleError: function (err) {
+                console.log(err.message);
+                this.emit('end');
+            }
+        }))
+
         // if production environment is not active init sourcemap
         .pipe(isProd ? plug.util.noop() : plug.sourcemaps.init())
 
         // get all sass files and proces them
-        .pipe(plug.sass({errLogToConsole: true, includePaths: [config.paths.sass.src]}))
+        .pipe(plug.sass({includePaths: ['app/scss/']})
+            .on('error', plug.sass.logError)
+        )
 
         // auto prefix css based on browser compatibility
         .pipe(plug.autoprefixer({
